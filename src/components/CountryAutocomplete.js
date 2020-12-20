@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Flex, Box} from 'rebass';
-import Autocomplete from 'react-autocomplete';
+import ReactAutocomplete from 'react-autocomplete';
 import {Form, Dropdown} from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -13,15 +13,18 @@ const Menu = styled(Box)`
 	z-index: 999;
 	position: absolute;
 	background: #fff;
-	border: 1px solid #ccc;
+	border: 1px solid ${props => props.theme.colors.borders};
 	border-radius: 5px;
 	max-height: 200px;
     overflow-y: scroll;
 `;
 
 const InputControl = styled(Form.Control)`
-	width: 400px;
-	@media screen min-wd
+	width: 100%;
+`;
+
+const Autocomplete = styled(ReactAutocomplete)`
+	width: 100%;
 `;
 
 const CountryAutocomplete = ({countries = [], onFilterCountry, ...props}) => {
@@ -44,13 +47,23 @@ const CountryAutocomplete = ({countries = [], onFilterCountry, ...props}) => {
 	}, []);
 
 	return (
-		<Flex {...props}>
+		<Flex className="container" {...props}>
 			<Autocomplete
+				wrapperProps={{
+					style: {
+						width: '100%'
+					}
+				}}
+				className="test"
 				open={menuOpen}
-				renderMenu={(items, value, style) => (<Menu className="autocomplete-menu"  style={{
-					...style,
-					maxWidth: style.minWidth
-				}}>{items}</Menu>)}
+				renderMenu={(items, value, style) => (
+					<Menu  style={{
+						...style,
+						maxWidth: style.minWidth
+					}}>
+						{items}
+					</Menu>
+				)}
 				getItemValue={(item) => item.Country}
 				items={countries}
 				shouldItemRender={item => item.Country.toLowerCase().includes(searchWord.toLowerCase())}
@@ -59,20 +72,19 @@ const CountryAutocomplete = ({countries = [], onFilterCountry, ...props}) => {
 						{item.Country}
 					</MenuItem>
 				}
-						  renderInput={inputProps => (
-							  <Form.Group>
-								  <InputControl
-									  className="filter-input"
-									  type="text"
-									  placeholder="filter country"
-									  {...inputProps}
-									  onFocus={() => {
-								  	setMenuOpen(true);
-								  }} onBlur={() => {
-								  	setSearchWord('');
-								  }} />
-							  </Form.Group>
-						  )}
+				renderInput={inputProps => (
+						  <InputControl
+							  className="filter-input"
+							  type="text"
+							  placeholder="filter country"
+							  {...inputProps}
+							  onFocus={() => {
+							setMenuOpen(true);
+							  }}
+							  onBlur={() => {
+							setSearchWord('');
+						  }} />
+				)}
 				value={searchWord}
 				onChange={(evt) => {
 					if (!menuOpen) {

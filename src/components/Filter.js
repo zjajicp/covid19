@@ -29,9 +29,17 @@ const FilterItem = ({country, onRemove, ...props}) => {
 
 const Filter = ({onAddCountry, onRemoveCountry, countryFilter, countries}) => {
 	return (
-		<Flex alignItems="center">
-			<CountryAutocomplete onFilterCountry={onAddCountry} countries={countries} />
-			<FilteredCountries ml="10px" flexWrap="wrap">
+		<Flex sx={{
+			flexDirection: ['column', 'row'],
+			alignItems: ['flex-start', 'center']
+		}}>
+			<CountryAutocomplete p={0} sx={{
+				width: ['100%', 400]
+			}} onFilterCountry={onAddCountry} countries={countries} />
+			<FilteredCountries sx={{
+				ml: [0, '10px'],
+				mb: ['20px', 0]
+			}} flexWrap="wrap">
 				{countryFilter.map((country, index) => (
 					<FilterItem
 						mr={index !== countryFilter.length - 1 ? '10px' : 0}

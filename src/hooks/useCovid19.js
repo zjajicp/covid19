@@ -13,7 +13,7 @@ export default () => {
 	
 	const {data: allCountries} = countriesApi;
 	
-	const {data: summary = [], loading: summaryLoading, refresh: refreshSummary} = summaryApi;
+	const {data: summary = {}, loading: summaryLoading, refresh: refreshSummary} = summaryApi;
 	
 	const addCountryFilter = (country) => {
 		setCountryFilter(currentFilter => currentFilter
@@ -43,13 +43,14 @@ export default () => {
 	}, [summary, filteredCountriesMap]);
 
 
-	console.log(view);
+	console.log(filteredSummary);
 	
 	return {
 	    state: {
 	        allCountries,
 			summary: filteredSummary,
 			summaryLoading,
+			message: summary.Message,
 			filteredCountries: countryFilter,
 			view,
 			countryFilter
