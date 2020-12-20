@@ -1,0 +1,1 @@
+export const calculateActive = (country) => country.TotalConfirmed - (country.TotalDeaths || 0) - (country.TotalRecovered || 0);

@@ -1,7 +1,9 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
+import {calculateActive} from '../utils';
+import FormatNumber from './FormatNumber';
 
-const TableView = ({summary}) => {
+const TableView = ({summary, totals}) => {
 	return  (
 		<Table responsive variant="dark" striped bordered hover>
 			<thead>
@@ -14,18 +16,30 @@ const TableView = ({summary}) => {
 				</tr>
 			</thead>
 
-			<tbody>{summary.map((item, index) => (
-				<tr key={item.CountryCode}>
-					<td>{index + 1}</td>
-					<td>{item.Country}</td>
-					<td>{item.TotalConfirmed - item.TotalDeaths - item.TotalRecovered}</td>
-					<td>{item.TotalDeaths}</td>
-					<td>{item.TotalRecovered}</td>
+			<tbody>
+			
+				{summary.map((item, index) => (
+					<tr key={item.CountryCode}>
+						<td>{index + 1}</td>
+						<td>{item.Country}</td>
+						<td><FormatNumber>{calculateActive(item)}</FormatNumber></td>
+						<td><FormatNumber>{item.TotalDeaths}</FormatNumber></td>
+						<td><FormatNumber>{item.TotalRecovered}</FormatNumber></td>
+					</tr>
+				))}
+
+				<tr>
+					<td></td>
+					<td></td>
+					<td><FormatNumber>{totals.active}</FormatNumber></td>
+					<td><FormatNumber>{totals.deaths}</FormatNumber></td>
+					<td><FormatNumber>{totals.recovered}</FormatNumber></td>
 				</tr>
-			))}</tbody>
+			
+			</tbody>
 
 		</Table>
 	);
 };
 
-export default TableView;
+export default React.memo(TableView);

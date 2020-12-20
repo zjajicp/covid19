@@ -1,6 +1,7 @@
 import useCovid19API from './useCovid19API';
 import {useMemo, useState} from 'react';
 import {pathOr} from 'ramda';
+import {calculateActive} from '../utils';
 
 export default () => {
 	const [countryFilter, setCountryFilter] = useState([]);
@@ -39,11 +40,23 @@ export default () => {
 	
 	const filteredSummary = useMemo(() => {
 		return filteredCountriesMap ?
-			summary.Countries.filter(country => !!filteredCountriesMap[country.Slug]) : pathOr([], ['Countries'], summary);
+			summary.Countries.filter(country => !!filteredCountriesMap[country.Slug]) :
+			pathOr([], ['Countries'], summary);
 	}, [summary, filteredCountriesMap]);
 
-
-	console.log(filteredSummary);
+	const totals = useMemo(() => {
+		return filteredSummary.reduce((acc, country) => {
+			return {
+				active: acc.active + calculateActive(country),
+				deaths: acc.deaths + country.TotalDeaths,
+				recovered: acc.recovered + country.TotalRecovered
+			};
+		}, {
+			active: 0,
+			deaths: 0,
+			recovered: 0
+		});
+	}, [filteredSummary]);
 	
 	return {
 	    state: {
@@ -53,7 +66,8 @@ export default () => {
 			message: summary.Message,
 			filteredCountries: countryFilter,
 			view,
-			countryFilter
+			countryFilter,
+			totals
 		},
 		actions: {
 	        refreshSummary,

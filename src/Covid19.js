@@ -13,12 +13,12 @@ const Container = styled(Flex)`
 	min-height: 100vh;
 `;
 
-const renderView = ({ view, summary, message}) => {
+const renderView = ({ view, summary, message, totals}) => {
 	if (message) {
 		return <Alert variant="warning">API Message: {message}</Alert>;
 	}
 	return <Box mt="30px">
-		{view === 'table' ? <TableView  summary={summary} /> : <BarChartView summary={summary} />}
+		{view === 'table' ? <TableView totals={totals}  summary={summary} /> : <BarChartView summary={summary} />}
 	</Box>;
 };
 
@@ -26,7 +26,7 @@ function Covid19() {
 	const {state, actions} = useCovid19();
 	const {addCountryFilter, removeCountryFilter, setView } = actions;
 
-	const { summaryLoading, countryFilter, allCountries, summary, view, message} = state;
+	const { summaryLoading, countryFilter, allCountries, summary, view, message, totals} = state;
 	return (
 		<Container
 			height="100%"
@@ -54,6 +54,7 @@ function Covid19() {
 					</Spinner>
 				</Flex>
 			) : renderView({
+				totals,
 				view,
 				summary,
 				message
