@@ -34,7 +34,9 @@ const CountryAutocomplete = ({countries = [], onFilterCountry, ...props}) => {
 	useEffect(() => {
 		const offClickHandler = (evt) => {
 			const inputElement = document.querySelector('.filter-input');
-			if (evt.target !== inputElement) {
+			const menuElement = document.querySelector('.country-menu');
+
+			if (evt.target !== inputElement && menuElement && !menuElement.contains(evt.target)) {
 				setMenuOpen(false);
 			}
 		};
@@ -57,10 +59,12 @@ const CountryAutocomplete = ({countries = [], onFilterCountry, ...props}) => {
 				className="test"
 				open={menuOpen}
 				renderMenu={(items, value, style) => (
-					<Menu  style={{
-						...style,
-						maxWidth: style.minWidth
-					}}>
+					<Menu
+						className="country-menu"
+						style={{
+							...style,
+							maxWidth: style.minWidth
+						}}>
 						{items}
 					</Menu>
 				)}
@@ -69,21 +73,21 @@ const CountryAutocomplete = ({countries = [], onFilterCountry, ...props}) => {
 				shouldItemRender={item => item.Country.toLowerCase().includes(searchWord.toLowerCase())}
 				renderItem={(item, isHighlighted) =>
 					<MenuItem isHighlighted={isHighlighted}>
-						{item.Country}
+						<Box>
+							{item.Country}
+
+						</Box>
 					</MenuItem>
 				}
 				renderInput={inputProps => (
 						  <InputControl
 							  className="filter-input"
 							  type="text"
-							  placeholder="filter country"
+							  placeholder="Search a country"
 							  {...inputProps}
 							  onFocus={() => {
-							setMenuOpen(true);
-							  }}
-							  onBlur={() => {
-							setSearchWord('');
-						  }} />
+							  	setMenuOpen(true);
+							  }}/>
 				)}
 				value={searchWord}
 				onChange={(evt) => {
@@ -94,9 +98,9 @@ const CountryAutocomplete = ({countries = [], onFilterCountry, ...props}) => {
 
 				}}
 				onSelect={(_, item) => {
+					onFilterCountry(item);
 					setSearchWord('');
 					setMenuOpen(false);
-					onFilterCountry(item);
 				}} />
 
 		</Flex>

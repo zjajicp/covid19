@@ -36,8 +36,8 @@ function Covid19() {
 				px: [10, 40, 60],
 			}}
 			flexDirection="column">
-			<Flex mb={4} justifyContent="space-between" sx={{
-				flexDirection: ['column', 'row']
+			<Flex justifyContent="space-between" sx={{
+				flexDirection: ['column', 'row'],
 			}}>
 				<Filter
 					onRemoveCountry={removeCountryFilter}

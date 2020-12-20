@@ -5,12 +5,12 @@ import FormatNumber from './FormatNumber';
 
 const TableView = ({summary, totals}) => {
 	return  (
-		<Table responsive variant="dark" striped bordered hover>
+		<Table responsive variant="dark" striped hover>
 			<thead>
 				<tr>
 					<th>#</th>
 					<th>Country</th>
-					<th>Active cases</th>
+					<th>Active</th>
 					<th>Deaths</th>
 					<th>Recoveries</th>
 				</tr>

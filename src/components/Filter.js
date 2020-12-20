@@ -10,6 +10,7 @@ const StyledFilterItem = styled(Flex)`
 
 const RemoveIcon = styled(FaTimes)`
 	cursor: pointer;
+	height: 11px;
 `;
 
 const FilteredCountries = styled(Flex)`
@@ -18,7 +19,7 @@ const FilteredCountries = styled(Flex)`
 
 const FilterItem = ({country, onRemove, ...props}) => {
 	return <StyledFilterItem alignItems="center" {...props}>
-		<Text mr="10px" fontSize={13}>{country.Country}</Text>
+		<Text mr="8px" fontSize={13}>{country.Country}</Text>
 		<Box onClick={() => {
 			onRemove(country);
 		}}>
@@ -37,12 +38,12 @@ const Filter = ({onAddCountry, onRemoveCountry, countryFilter, countries}) => {
 				width: ['100%', 400]
 			}} onFilterCountry={onAddCountry} countries={countries} />
 			<FilteredCountries sx={{
+				mt: [2, 0],
 				ml: [0, '10px'],
 				mb: ['20px', 0]
 			}} flexWrap="wrap">
-				{countryFilter.map((country, index) => (
+				{countryFilter.map((country) => (
 					<FilterItem
-						mr={index !== countryFilter.length - 1 ? '10px' : 0}
 						onRemove={onRemoveCountry}
 						country={country} />
 				))}
