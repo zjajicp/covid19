@@ -21,11 +21,13 @@
     "recharts": "^1.8.5",
     "styled-components": "^5.0.0",
     "styled-system": "^5.1.5",
+    "surge": "^0.21.7",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "yarn build && cp CNAME ./buid/ && surge ./dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
