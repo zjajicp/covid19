@@ -60,7 +60,7 @@ export default () => {
 	
 	return {
 	    state: {
-	        allCountries,
+	    	allCountries,
 			summary: filteredSummary,
 			summaryLoading,
 			message: summary.Message,
@@ -70,7 +70,7 @@ export default () => {
 			totals
 		},
 		actions: {
-	        refreshSummary,
+	    	refreshSummary,
 			addCountryFilter,
 			removeCountryFilter,
 			toggleView,
